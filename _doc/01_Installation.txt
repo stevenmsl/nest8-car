@@ -1,0 +1,8 @@
+
+- .eslintrc 
+  - comment out the content of exports
+    to prevent eslint from checking the
+    syntax that sometimes causes confusion
+- VS Code Extensions
+  - REST Client
+  - SQLite

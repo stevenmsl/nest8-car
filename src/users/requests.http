@@ -1,0 +1,25 @@
+### Create a new user #03-13
+Post http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "email": "arlo@arlo.com",
+    "password": "arlothepet"
+}
+
+###  
+Get http://localhost:3000/auth/1
+
+###
+Get http://localhost:3000/auth?email=arlo@arlo.com
+
+### Update a user
+PATCH http://localhost:3000/auth/2
+content-type: application/json
+
+{
+  "password": "arlothedog"
+}
+
+### Delete a user given id
+DELETE http://localhost:3000/auth/1

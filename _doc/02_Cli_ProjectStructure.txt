@@ -1,0 +1,20 @@
+- nest g module users 
+  - a subfolder named users will be created under src folder
+  - users.module.ts file will be created in the users folder
+  - UsersModule will be added to the imports array of the
+    @Module decorator in app.module.ts
+
+- nest g controller users
+  - a users.controller.ts file will be created in the 
+    users folder under src
+  - users.module.ts will be modified to add the UsersController
+    to the controllers array of the @Module decorator
+
+        
+ - nest g service users
+   - a users.service.ts file will be created in the user
+     folder under src
+   - users.module.ts will be modified to add the UsersService
+     to the providers array of the @Module decorator
+
+- repeat the same steps for the reports module

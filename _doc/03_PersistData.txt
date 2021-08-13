@@ -1,0 +1,47 @@
+- entity & repository 
+  - a class that lists all the properties you need 
+    - #03-01
+  - connect the entity to its parent module to create
+    a repository
+    - #03-02
+  - connect the entity to the root connection 
+    (in app module)
+    - #03-03
+
+- validation
+  - define DTO for the incoming request
+    - #03-04
+  - configure validation rules by applying decorators 
+    from 'class-validator' to the DTO properties need
+    to be validated
+    - #03-05
+  - use the DTO as the parameter of the request handler
+    - #03-06  
+  - use whitelist to stripe of extraneous properties from 
+    the incoming request 
+    - #03-07
+
+- service
+  - where you put the business logic
+  - depends on repository to access db
+    - need to use @InjectRepository decorator on 
+      the repo parameter due the limitation of DI
+      on the generic types #03-08
+  - allow clients to specify partial properties
+    when updating entities #03-09
+  - entity hooks
+    - you define hooks on entity #03-10
+    - you need to follow certain rules so the hooks
+      can be triggered #03-11
+  - exceptions
+    - generally speaking we don't want to throw
+      protocol specific exceptions like
+      NotFoundException, which only works for http
+      , in the service. #03-12
+    - nestjs supports different protocols so 
+      throwing protocol specific exceptions in the
+      service is not ideal    
+
+- Manual Testing
+  - install REST Client from Huachao Mao
+  - examples #03-13           
