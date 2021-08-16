@@ -1,0 +1,30 @@
+- The goal here is that we do not want to just
+  return the entities retrieved from the db;
+  we want to transform them to DTOs instead
+  before sending them back to the client
+  - remove sensitive properties from the
+    entities like password
+  - for the same entity return different 
+    set of properties based on permissions
+
+- define DTOs
+  - use @Expose() do configure which properties
+    to include in the response #04-01
+
+- Interceptors
+  - can mess around with incoming requests and/or
+    outgoing responses
+  - can be applied to a single handler, all the
+    handlers in a controller, or globally
+  - define a constructor to take in the type of
+    the DTO so the Interceptor will know 
+    what to produce #04-02
+  - define a intercept method and perform the
+    actual transformation there #04-03
+
+- Custom decorator
+  - define a custom decorator to make passing in DTO
+    type info to the Interceptor a bit easier #04-04
+
+- Configure the controller to use the Interceptor
+  - #04-05
