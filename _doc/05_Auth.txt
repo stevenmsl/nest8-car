@@ -1,0 +1,61 @@
+- goal
+  - store authenticated user's id in session and then send
+    it back to the client to store in the cookies
+
+  - use interceptor to retrieve user info using the
+    user id stored in the session after a user is
+    authenticated; the retrieved user info is
+    then stored in the request before any route handler
+    can receive the request
+
+  - decorators don't have access to DI and hence
+    can't access service/repository to retrieve user 
+    info from the db
+
+- cookie-session package
+  - this is used to encrypt the cookies sending back to the client
+    - when you are signing in/up you will see this in 
+      the header:
+      Set-Cookie: express:sess=eyJ1c2VySWQiOj
+  - how to set it up?
+    - import the cookie-session #05-01
+    - configure it as a middleware and provide the
+      key to use for encryption #05-02
+
+- auth service
+  - depends on user service to interact with the db #05-03
+  - participates in DI #05-04
+
+- current user interceptor
+  - this is the middleman between the user service and 
+    the current user decorator
+    - a decorator can't access DI and hence can't access
+      auth service. It needs help from interceptor
+  - retrieves user info and put it in the request object
+    before the request is routed to the controller #05-05
+  - configure it globally so you don't have to do that on
+    each controller #05-06
+    
+- current user decorator
+  - this decorator is a HTTP route param decorator, which
+    allows whoever applies this decorator to have access
+    to the user info stored in the request object #05-07
+  - retrieves the user info from the request object and
+    populates the decorated parameter #05-08
+  - apply the decorator in the controller #05-09 
+
+- auth guard
+  - guard has access to the ExecutionContext and hence
+    the request to check if there is any user
+    info stored in the request #05-10
+  - apply this guard to whichever route you want to 
+    protect and only allow authenticated users to
+    have access #05-11
+     
+
+- controller 
+  - uses user service to retrieve user from the db
+    and store user id in the session, which later
+    will be put in the cookie header and sent back
+    to the client #05-12
+
