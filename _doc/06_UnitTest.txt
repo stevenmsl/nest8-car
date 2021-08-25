@@ -1,0 +1,46 @@
+- goal
+  - explore how to implement mock service in the context
+    for DI to facilitate unit testing 
+
+- how to run tests
+  - npm run test:watch
+    - note that the script has been modified a bit to
+      speed up the tests (check package.json)
+      - jest --watch --maxWorkers=1
+    - you can use "p" to run only a subset of the tests        
+
+- auth service
+  - mocking users serivce
+    - auth service depends on users service so you need
+      to mock the users service #06-01
+    - use Typescript utility type Partial so that you 
+      only need to implement needed methods in users
+      service #06-02
+    - create DI container and configure which services
+      need to be instantiated by the container #06-03
+    - use the mock users service instead of the real one 
+      - #06-04
+
+  - limitations on testing the encrypted password #06-05
+
+  - limitations on throwing exceptions while performing
+    await seems no longer an issue #06-06
+    - make sure you don't pass in done (DoneCallBack) 
+      in the test; you can't use it with async, and
+      it will cause timeout errors sometimes
+      it('...', async(done) => {}) <-- don't do this
+
+- user controller
+  - you are not testing the decorators used in the
+    controller or its methods; you test those in the
+    integration tests
+  - unit tests for controllers might seems trivial
+    and not very useful; this should be the case: 
+    controllers should be as simple as possible 
+    as most of the business logic should reside in 
+    the services
+  - make sure DI is configured properly #06-07  
+  - redefine mock service in individual test to
+    feed the need of the test #06-08
+  - provide fake session object where to simulate
+    the decorator #06-09
