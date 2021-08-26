@@ -1,0 +1,69 @@
+- setup
+  - the goal is to be able to use different
+    database from dev and test
+  - we want to clean up the db before each
+    integration test
+
+- install cross-env package
+  - this package allows you to define NODE_ENV
+    and then nest or jest cli can pick it up 
+    and pass it along to the code
+  - check the script session in the package.json
+    for more examples
+    - cross-env NODE_ENV=development nest start 
+    - cross-env NODE_ENV=test jest --watch --maxWorkers=1     
+
+- install @nestjs/config
+  - this package allows you to read settings from a .env file
+  - combining with the NODE_ENV set by cross-env you can
+    pick up different .env file and hence different settings 
+    per the environment specified by cross-env
+  - we have two .env files in this project
+    - .env.development
+    - .env.test
+  - you don't check in .env files as there might be confidential
+    data in them but in our case we are fine  
+
+- middlewares and global pipes
+  - we need to move them from main.ts to app.module.ts to 
+    facilitate the integration tests as all the pipes
+    and middlewares need to be available as well 
+   
+- improve app.module
+  - the goal is to be able to load the app.module
+    along with all the required pipes and middlewares 
+    during testing
+  - configure the cookieSession middleware #07-01
+    - make sure it's apply to all routes #07-02
+  - confgiure the global pipes to make it available
+    through DI #07-03
+  - import ConfigModule
+    - specify which env file to load and make the 
+      module available globally #07-04
+  - import TypeOrmModule
+    - inject Config service and use it to get access 
+      to the DB_NAME settings defined in the env fie
+      - #07-05
+
+- implement database clean up
+  - add the following entry to the jest-e2e.json
+    located in the test folder
+     "setupFilesAfterEnv": ["<rootDir>/setup.ts"]
+  - rootDir in this case refers to the test folder
+  - delete the db file before each test #07-06
+  - after each test we have to make sure there is
+    no connection open on the db or you won't be able 
+    to delete the db file #07-07
+  - make sure only one test is running at any given
+    time to make sure there is no contention in 
+    cleaning up the db
+    - add --maxWorkers=1 to the test:e2e script
+      in the package.json file
+
+- integration test
+  - run this command to perform integration tests
+     npm run test:e2e
+  - load the app.module to create the entire app
+    before each test #07-08
+  - handle cookie in the test #07-09 
+  
