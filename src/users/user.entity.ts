@@ -1,3 +1,4 @@
+import { report } from 'superagent';
 import {
   AfterInsert,
   AfterRemove,
@@ -5,7 +6,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
+import { Report } from '../reports/report.entity';
 
 @Entity() /* #03-01 */
 export class User {
@@ -18,6 +21,9 @@ export class User {
   @Column()
   password: string;
 
+  /* 08-01 */
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Report[];
   /* #03-10 */
   @AfterInsert()
   logInsert() {

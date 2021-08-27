@@ -7,7 +7,7 @@ Content-Type: application/json
     "password": "arlothepet"
 }
 
-### sign in as an existing user
+### sign in as an existing user #REF02
 Post http://localhost:3000/auth/signin
 Content-Type: application/json
 

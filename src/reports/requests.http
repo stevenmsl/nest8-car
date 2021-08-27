@@ -1,0 +1,16 @@
+### #08-07 
+### make sure it's authenticated before
+### making this call #REF02
+POST http://localhost:3000/reports
+Content-Type: application/json
+
+{
+  "make": "Infiniti",
+  "model": "G37x",
+  "year": 2010,
+  "mileage": 160000,
+  "lng": 0,
+  "lat": 0,
+  "price": 20000
+
+}

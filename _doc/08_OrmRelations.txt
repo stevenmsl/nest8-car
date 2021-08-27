@@ -1,0 +1,29 @@
+- goal 
+  - implement one-to-many relations in TypeORM
+  - make sure the response does not have 
+    sensitive data like password
+
+- define relations in entities
+  - from user to report; one to many relation #08-01
+  - from report to user; many to one relation #08-02
+  - inevitably you are going to have a circular
+    references when defining relations: User type needs 
+    to import Report type and vice versa
+    - this means User and Report types will not be
+      available at the same time during importing
+    - this potential type undefined issue can be resolved
+      by passing in a function that returns the type needed  
+      to the decorator #08-03
+      - by the time you call () => User, the type
+        User should be available already
+
+- define DTOs for validations and transformation
+  - validations #08-04
+  - transformation #08-05
+
+- report service
+  - create a report and specify the user 
+    before saving it #08-06
+
+- run it #08-07 
+

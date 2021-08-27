@@ -1,6 +1,6 @@
 - setup
   - the goal is to be able to use different
-    database from dev and test
+    database for dev and test
   - we want to clean up the db before each
     integration test
 
