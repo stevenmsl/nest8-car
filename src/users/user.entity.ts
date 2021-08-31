@@ -21,6 +21,13 @@ export class User {
   @Column()
   password: string;
 
+  /* #09-04 
+    - the default value is set just to showcase
+      how to set a default value on a column 
+  */
+  @Column({ default: true })
+  admin: boolean;
+
   /* 08-01 */
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];

@@ -1,0 +1,29 @@
+- note
+  every time you made modification to the entities and can't connect to the db
+  afterwards just delete the db.sqlite to have a fresh start
+
+- goal 
+  - implement authorization to protect permission-based APIs
+
+- Guards, interceptors, and middlewares
+  - requests flow through middlewares, guards, and then
+    interceptors.
+  - since we implement authorization as guards, 
+    we need to convert the current user interceptor
+    into a middleware. This will allow us to put the
+    user info in the requests before they arrive at 
+    the authorization guard #09-01
+   
+- current user middleware
+  - augment the express Request interface #09-02
+  - configure the middle to be available for 
+    all routes #09-03
+
+- admin guard
+  - add admin property to the user entity #09-04
+  - implement the authorization logic #09-05
+     
+- controller
+  - apply AdminGuard for authorization #09-06
+
+- test #09-07
