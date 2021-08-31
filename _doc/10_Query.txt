@@ -1,0 +1,15 @@
+- goal
+  - how to perform queries in Type ORM
+
+- DTOs
+  - define DTO for validation and transformation
+  - you need to convert query string into proper type
+    #10-01 
+
+- implement the query logic in the service 
+  - #10-02
+
+- define API
+  - #10-03
+
+- test it out #10-04

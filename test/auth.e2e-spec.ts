@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { emitKeypressEvents } from 'node:readline';
 
 describe('Authentication System', () => {
   let app: INestApplication;
@@ -31,7 +30,7 @@ describe('Authentication System', () => {
       });
   });
 
-  it('', async () => {
+  it('tests whoami API', async () => {
     const email = 'arlo@arlo.com';
 
     const res = await request(app.getHttpServer())
