@@ -19,24 +19,26 @@ const cookieSession = require('cookie-session');
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
+    /* #11-07 */
+    TypeOrmModule.forRoot(),
     /* #07-05 */
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        return {
-          type: 'sqlite',
-          database: config.get<string>('DB_Name'),
-          /* #03-03 */
-          entities: [User, Report],
-          /* 
-            - this will automatically apply
-              the schema changes to the db
-            - only use this while in development
-          */
-          synchronize: true,
-        };
-      },
-    }),
+    // TypeOrmModule.forRootAsync({
+    //   inject: [ConfigService],
+    //   useFactory: (config: ConfigService) => {
+    //     return {
+    //       type: 'sqlite',
+    //       database: config.get<string>('DB_Name'),
+    //       /* #03-03 */
+    //       entities: [User, Report],
+    //       /*
+    //         - this will automatically apply
+    //           the schema changes to the db
+    //         - only use this while in development
+    //       */
+    //       synchronize: true,
+    //     };
+    //   },
+    // }),
     UsersModule,
     ReportsModule,
   ],
@@ -52,13 +54,15 @@ const cookieSession = require('cookie-session');
   ],
 })
 export class AppModule {
+  constructor(private configService: ConfigService) {}
   /* #07-01 */
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
         /* #05-02 */
         cookieSession({
-          keys: ['arlothepet'],
+          /* #11-01 */
+          keys: [this.configService.get<string>('COOKIE_KEY')],
         }),
       )
       /* #07-02 */

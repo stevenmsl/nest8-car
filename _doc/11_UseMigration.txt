@@ -1,0 +1,73 @@
+- Cookie Key
+  - read the key from the .env file instead of putting
+    it in the source code #11-01
+  
+
+- TypeORM: goal 
+  - turn off the synchronize flag in the TypeORM config
+    - this is flag is dangerous and should be avoided
+      in general
+  - utilize TypeORM migration to apply schema changes
+
+- TypeORM: ormconfig.js
+  - there are many options for you to provide configuration
+    to the TypeORM outside the code, and using ormconfig.js is the 
+    only option works in our case:
+    - we need to be able to program the logic to use different
+      configuration for different environments; so either using
+      JS or TS file 
+    - nestjs dev env will pick up the config file once
+      all the ts files have been transpired to js files
+      so we can only use js file for configuration
+    - nestjs test env will transpire the ts files on the fly
+      while picking up the config file so we need to tweak 
+      the tsconfig.json to allow JS since we are using js file
+      for configuration
+  - create ormconfig.js in the project root folder
+  - turn off the synchronize flag #11-02
+  - where to put the migration files #11-03
+  - list all the entities
+    - you are looking for JS files in dev #11-04
+    - you are looking for TS files in test #11-05
+  - in test env we require the migration to run 
+    automatically as we delete the db before every test
+    - #11-06
+
+- TypeORM: create migrations
+  - install CLI 
+    - npm i -g typeorm
+  - add a script named typeorm in package.json for creating migrations
+    - cross-env NODE_ENV=development node --require ts-node/register ./node_modules/typeorm/cli.js
+
+  - create the initial migration
+    - delete the db.sqlite file
+    - delete the dist folder and run the app in dev mode
+      to re-create the dist folder
+      - this is to make sure you have up-to-date entity
+        js files before creating the first migration
+      - the db.sqlite will be created and has no schema
+        in it
+    - migrations are created in dev mode
+    - run this script to create the very first migration
+      npm run typeorm migration:generate -- -n initial-schema -o
+    - the migration files are JS files to make apply the migrations
+      easier
+    - you should see a folder named migrations created along
+      with a migration file in it
+
+  - apply migration to database
+    - run this command
+    - npm run typeorm migration:run
+
+
+- TypeORM: import the module
+  - you no longer need to specify the configuration in the code 
+    - #11-07
+
+- Run in dev mode
+  - if you see anything weird, delete the dist folder and try again
+
+- Integration test
+  - you need to increase the timeout to have enough time to
+    apply migrations before a test
+    -  "test:e2e": "cross-env NODE_ENV=test jest --config ./test/jest-e2e.json --maxWorkers=1  --testTimeout=20000"   
